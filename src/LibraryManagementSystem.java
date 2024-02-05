@@ -2,15 +2,7 @@ import java.util.Scanner;
 
 public class LibraryManagementSystem {
     public static void main(String[] args) {
-        /*
 
-
-        Book book1 = new Book("Abay way", "Mukhtar Auezov", 1);
-        Book book2 = new Book("The Nomads", "Ilyas Esenberlin", 2);
-
-        library.addItem(book1);
-        library.addItem(book2);
-         */
         Library library = new Library();
         Scanner scanner = new Scanner(System.in);
 
@@ -25,28 +17,29 @@ public class LibraryManagementSystem {
 
             System.out.print("Enter your choice (1-6): ");
             int choice = scanner.nextInt();
+            System.out.println();
 
             switch (choice) {
-//                case 1:
-//                    System.out.print("Enter the title of the book to borrow: ");
-//                    scanner.nextLine();
-//                    String borrowTitle = scanner.nextLine();
-//                    library.borrowItem(borrowTitle);
-//                    break;
-//
-//                case 2:
-//                    System.out.print("Enter the title of the book to return: ");
-//                    scanner.nextLine();
-//                    String returnTitle = scanner.nextLine();
-//                    library.returnItem(returnTitle);
-//                    break;
-//
-//                case 3:
-//                    library.displayAvailableItems();
-//                    break;
+                case 1:
+                    System.out.print("Enter the title of the book to borrow: ");
+                    scanner.nextLine();
+                    String borrowTitle = scanner.nextLine();
+                    library.borrowItem(borrowTitle);
+                    break;
+
+                case 2:
+                    System.out.print("Enter the title of the book to return: ");
+                    scanner.nextLine();
+                    String returnTitle = scanner.nextLine();
+                    library.returnItem(returnTitle);
+                    break;
+
+                case 3:
+                    library.displayAvailableItems();
+                    break;
 
                 case 4:
-                    System.out.print("Enter book id: ");
+                    System.out.print("Enter book ID: ");
                     int book_id = scanner.nextInt();
                     System.out.print("Enter the title of the new book: ");
                     scanner.nextLine();
@@ -56,16 +49,16 @@ public class LibraryManagementSystem {
                     System.out.print("Enter the author of the new book: ");
                     scanner.nextLine();
                     String newAuthor = scanner.nextLine();
+
                     library.addItem(book_id, newTitle, year, newAuthor);
-                    System.out.println("Book added successfully.");
                     break;
 
-//                case 5:
-//                    System.out.print("Enter the ID of the item to remove: ");
-//                    int removeId = scanner.nextInt();
-//                    library.removeItem(removeId);
-//                    System.out.println("Item removed successfully.");
-//                    break;
+                case 5:
+                    System.out.print("Enter the ID of the item to remove: ");
+                    int removeId = scanner.nextInt();
+
+                    library.removeItem(removeId);
+                    break;
 
                 case 6:
                     System.out.println("Exiting the Library Management System. Goodbye!");
