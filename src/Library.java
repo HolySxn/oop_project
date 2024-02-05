@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
 import java.sql.*;
 
 
@@ -17,10 +15,6 @@ class Library {
         catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-    public Connection getConnection(){
-        return connection;
-
     }
 
     public void addItem(int id, String name, int year, String author) {
@@ -68,7 +62,7 @@ class Library {
         }
     }
 
-    public void borrowItem(String title) {
+    public void borrowItem(String title, int user_id) {
         try {
             PreparedStatement statement = connection.prepareStatement("Select available FROM books WHERE book_name = ?");
             statement.setString(1, title);
@@ -76,8 +70,9 @@ class Library {
 
             if (resultSet.next()) {
                 if (resultSet.getBoolean("available")) {
-                    PreparedStatement statement2 = connection.prepareStatement("UPDATE books SET available = false WHERE book_name = ?");
-                    statement2.setString(1, title);
+                    PreparedStatement statement2 = connection.prepareStatement("UPDATE books SET available = false, customer_id = ? WHERE book_name = ?");
+                    statement2.setInt(1, user_id);
+                    statement2.setString(2, title);
 
                     int rowsUpdated = statement2.executeUpdate();
                     if (rowsUpdated > 0) {
@@ -107,7 +102,7 @@ class Library {
 
             if (resultSet.next()) {
                 if (!resultSet.getBoolean("available")) {
-                    PreparedStatement statement2 = connection.prepareStatement("UPDATE books SET available = true WHERE book_name = ?");
+                    PreparedStatement statement2 = connection.prepareStatement("UPDATE books SET available = true, customer_id = null WHERE book_name = ?");
                     statement2.setString(1, title);
 
                     int rowsUpdated = statement2.executeUpdate();
@@ -135,7 +130,7 @@ class Library {
         try {
             if (connection != null){
                 Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery("SELECT * FROM books");
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM books ORDER BY book_id");
 
                 while (resultSet.next()) {
                     System.out.println(resultSet.getInt("book_id") + ") '" +
