@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class LibraryManagementSystem {
     public static void main(String[] args) {
+        System.out.println("Hello World!");
         Library library = new Library();
         Scanner scanner = new Scanner(System.in);
 
