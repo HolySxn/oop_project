@@ -1,13 +1,29 @@
-class Book extends Item {
+class Book {
+    private String title;
     private String author;
+    private int id;
+    private int year;
     private boolean isAvailable;
 
-    public Book(String title, String author, int id) {
-        super(title, id);
+    public Book(int id, String title, String author, int year) {
+        this.id = id;
+        this.title = title;
         this.author = author;
+        this.year = year;
         this.isAvailable = true;
     }
 
+    public int getId () {
+        return id;
+    }
+
+    public String getTitle(){
+        return title;
+    }
+
+    public int getYear(){
+        return year;
+    }
 
     public String getAuthor() {
         return author;
@@ -25,9 +41,7 @@ class Book extends Item {
         isAvailable = available;
     }
 
-
-    @Override
     public void displayDetails() {
-        System.out.println("Book Details - Title: " + name + ", Author: " + author + ", ID: " + id);
+        System.out.println("Book Details - Title: " + title + ", Author: " + author + ", ID: " + id + ", Year: " + year);
     }
 }

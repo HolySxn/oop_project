@@ -2,8 +2,8 @@ import java.util.Scanner;
 
 public class LibraryManagementSystem {
     public static void main(String[] args) {
-
-        Library library = new Library();
+        DatabaseConnection connection = new DatabaseConnection();
+        Library library = new Library(connection);
         Scanner scanner = new Scanner(System.in);
 
         while (true){
@@ -16,14 +16,15 @@ public class LibraryManagementSystem {
 
             switch (choice) {
                 case 1:
-                    Manager manager = new Manager();
+                    ManagerAuthentication authentication = new ManagerAuthentication(connection);
                     System.out.print("Enter the id: ");
                     int manager_id = scanner.nextInt();
                     System.out.print("Enter the password: ");
                     scanner.nextLine();
                     String manager_password = scanner.nextLine();
 
-                    if (manager.check_manager(manager_id, manager_password)){
+                    if (authentication.authenticate(manager_id, manager_password)){
+                        Manager manager = new Manager(manager_id, connection);
                         System.out.println("Welcome, " + manager.get_name(manager_id));
                         System.out.println();
                         while (true){
@@ -52,7 +53,8 @@ public class LibraryManagementSystem {
                                     scanner.nextLine();
                                     String newAuthor = scanner.nextLine();
 
-                                    library.addItem(book_id, newTitle, year, newAuthor);
+                                    Book book = new Book(book_id, newTitle, newAuthor, year);
+                                    library.addItem(book);
                                     break;
                                 case 3:
                                     System.out.print("Enter the ID of the item to remove: ");
@@ -74,14 +76,15 @@ public class LibraryManagementSystem {
                     break;
 
                 case 2:
-                    Customer customer = new Customer();
+                    CustomerAuthentication authentication1 = new CustomerAuthentication(connection);
                     System.out.print("Enter the id: ");
                     int customer_id = scanner.nextInt();
                     System.out.print("Enter the password: ");
                     scanner.nextLine();
                     String customer_password = scanner.nextLine();
 
-                    if (customer.check_customer(customer_id, customer_password)){
+                    if (authentication1.authenticate(customer_id, customer_password)){
+                        Customer customer = new Customer(customer_id, connection);
                         System.out.println("Welcome, " + customer.get_name(customer_id));
                         System.out.println();
                         while (true){

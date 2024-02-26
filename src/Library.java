@@ -2,30 +2,21 @@ import java.sql.*;
 
 
 class Library {
-    static final String URL = "jdbc:postgresql://localhost:5432/library";
-    static final String USERNAME = "postgres";
-    static final String PASSWORD = "123";
-    private Connection connection;
+    private final Connection connection;
 
-
-    public Library() {
-        try {
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public Library(DatabaseConnection connection) {
+        this.connection = connection.getConnection();
     }
 
-    public void addItem(int id, String name, int year, String author) {
+    public void addItem(Book book) {
         try {
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO books (book_id, book_name, year_of_publ, author)" +
                             "VALUES (?, ?, ?, ?)");
-            statement.setInt(1, id);
-            statement.setString(2, name);
-            statement.setInt(3, year);
-            statement.setString(4, author);
+            statement.setInt(1, book.getId());
+            statement.setString(2, book.getTitle());
+            statement.setInt(3, book.getYear());
+            statement.setString(4, book.getAuthor());
 
             int rowsAffected = statement.executeUpdate();
             if (rowsAffected > 0) {
